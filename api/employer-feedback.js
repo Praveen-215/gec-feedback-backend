@@ -1,6 +1,9 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_H6mVyok0TZCU@ep-dark-cherry-aduo9c6v-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require', ssl: { rejectUnauthorized: false } });
+const pool = new Pool({ 
+  connectionString: process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_grObAXp9ek4w@ep-dark-cherry-aduo9c6v-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require', 
+  ssl: { rejectUnauthorized: false } 
+});
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,7 +17,9 @@ module.exports = async (req, res) => {
     contact_person, designation, mobile, email, suggestions,
     po_knowledge, po_analysis, po_design, po_invest,
     po_tools, po_society, po_sustain, po_ethics,
-    po_team, po_comm, po_mgmt, po_learn
+    po_team, po_comm, po_mgmt, po_learn,
+    support_academic, train_students, recruit_graduates,
+    visit_college, skills_gap, teaching_improvements, other_suggestions
   } = req.body;
 
   try {
@@ -24,14 +29,19 @@ module.exports = async (req, res) => {
         designation, mobile, email, suggestions,
         po_knowledge, po_analysis, po_design, po_invest,
         po_tools, po_society, po_sustain, po_ethics,
-        po_team, po_comm, po_mgmt, po_learn)
+        po_team, po_comm, po_mgmt, po_learn,
+        support_academic, train_students, recruit_graduates,
+        visit_college, skills_gap, teaching_improvements, other_suggestions)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,
-               $9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20)`,
+               $9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,
+               $21,$22,$23,$24,$25,$26,$27)`,
       [organisation_name, industry_type, address, contact_person,
        designation, mobile, email, suggestions,
        po_knowledge, po_analysis, po_design, po_invest,
        po_tools, po_society, po_sustain, po_ethics,
-       po_team, po_comm, po_mgmt, po_learn]
+       po_team, po_comm, po_mgmt, po_learn,
+       support_academic, train_students, recruit_graduates,
+       visit_college, skills_gap, teaching_improvements, other_suggestions]
     );
     res.json({ success: true, message: 'Feedback submitted successfully!' });
   } catch (err) {
